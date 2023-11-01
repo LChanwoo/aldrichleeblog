@@ -1,7 +1,7 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
   title: 'Aldrich Lee Blog',
-  author: 'Aldrich Lee',
+  author: 'Aldrich Lee',
   headerTitle: 'Aldrich Lee의 개발 블로그',
   description: 'Aldrich Lee의 개발 블로그입니다.',
   language: 'ko-KR',
