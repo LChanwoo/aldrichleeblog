@@ -62,6 +62,23 @@ function createTagCount(allBlogs) {
   writeFileSync('./app/tag-data.json', JSON.stringify(tagCount))
 }
 
+function createCategoryCount(allBlogs) {  
+  const categoryCount: Record<string, number> = {}
+  allBlogs.forEach((file) => {
+    if (file.category && (!isProduction || file.draft !== true)) {
+
+        const formattedCategory = file.category
+        if (formattedCategory in categoryCount) {
+          categoryCount[formattedCategory] += 1
+        } else {
+          categoryCount[formattedCategory] = 1
+        }
+      }
+    }
+  )
+  writeFileSync('./app/category-data.json', JSON.stringify(categoryCount))
+}
+
 function createSearchIndex(allBlogs) {
   if (
     siteMetadata?.search?.provider === 'kbar' &&
@@ -84,6 +101,7 @@ export const Blog = defineDocumentType(() => ({
     date: { type: 'date', required: true },
     tags: { type: 'list', of: { type: 'string' }, default: [] },
     lastmod: { type: 'date' },
+    category: { type: 'string' },
     draft: { type: 'boolean' },
     summary: { type: 'string' },
     images: { type: 'json' },
@@ -152,6 +170,7 @@ export default makeSource({
   onSuccess: async (importData) => {
     const { allBlogs } = await importData()
     createTagCount(allBlogs)
+    createCategoryCount(allBlogs)
     createSearchIndex(allBlogs)
   },
 })
