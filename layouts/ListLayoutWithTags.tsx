@@ -9,6 +9,7 @@ import type { Blog } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
+import categoryData from 'app/category-data.json'
 import tagData from 'app/tag-data.json'
 
 interface PaginationProps {
