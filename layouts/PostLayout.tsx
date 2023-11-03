@@ -9,6 +9,9 @@ import Image from '@/components/Image'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
+import CategoryTag from '@/components/CategoryTag'
+import categoryList from '../app/categoryList-data.json'
+import PostInCategory from '@/components/PostInCategory'
 
 const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
 const discussUrl = (path) =>
@@ -30,7 +33,8 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
-  const { filePath, path, slug, date, title, tags } = content
+  const { filePath, path, slug, date, title, tags, category } = content
+  const filteredCategory = categoryList[category!]
   const basePath = path.split('/')[0]
 
   return (
@@ -111,6 +115,31 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
             </div>
             <footer>
               <div className="divide-gray-200 text-sm font-medium leading-5 dark:divide-gray-700 xl:col-start-1 xl:row-start-2 xl:divide-y">
+                {category && (
+                  <div className="py-4 xl:py-8">
+                    <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                      Category
+                    </h2>
+                    <div className="flex flex-wrap">{<CategoryTag text={category} />}</div>
+                  </div>
+                )}
+                {/* 으아앙 */}
+                {category && (
+                  <div className="py-4 xl:py-8">
+                    <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                      Category Posts
+                    </h2>
+                    <div className="flex flex-wrap">
+                      {filteredCategory.map((post) => (
+                        <PostInCategory
+                          key={post.slug}
+                          text={post.title}
+                          slug={post.slug}
+                        ></PostInCategory>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 {tags && (
                   <div className="py-4 xl:py-8">
                     <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">

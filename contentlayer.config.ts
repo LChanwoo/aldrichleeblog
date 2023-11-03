@@ -20,7 +20,9 @@ import rehypeCitation from 'rehype-citation'
 import rehypePrismPlus from 'rehype-prism-plus'
 import rehypePresetMinify from 'rehype-preset-minify'
 import siteMetadata from './data/siteMetadata'
+
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer.js'
+import { sortPostsByCategoryOrder, sortPostsBySlug } from './lib/utils/comparator'
 
 const root = process.cwd()
 const isProduction = process.env.NODE_ENV === 'production'
@@ -62,21 +64,41 @@ function createTagCount(allBlogs) {
   writeFileSync('./app/tag-data.json', JSON.stringify(tagCount))
 }
 
-function createCategoryCount(allBlogs) {  
+function createCategoryCount(allBlogs) {
   const categoryCount: Record<string, number> = {}
   allBlogs.forEach((file) => {
     if (file.category && (!isProduction || file.draft !== true)) {
-
-        const formattedCategory = file.category
-        if (formattedCategory in categoryCount) {
-          categoryCount[formattedCategory] += 1
-        } else {
-          categoryCount[formattedCategory] = 1
-        }
+      const formattedCategory = file.category
+      if (formattedCategory in categoryCount) {
+        categoryCount[formattedCategory] += 1
+      } else {
+        categoryCount[formattedCategory] = 1
       }
     }
-  )
+  })
   writeFileSync('./app/category-data.json', JSON.stringify(categoryCount))
+}
+function createCategoryList(allBlogs) {
+  const categoryList: Record<string, { title: string; slug: string }[]> = {}
+  const sortedBlogs = sortPostsByCategoryOrder(allBlogs)
+  sortedBlogs.forEach((file) => {
+    if (file.category && (!isProduction || file.draft !== true)) {
+      const formattedCategory = file.category
+      const idx = categoryList[formattedCategory]
+        ? Object.keys(categoryList[formattedCategory]).length + 1
+        : 1
+      const data = {
+        title: idx + '.' + file.title,
+        slug: file.slug,
+      }
+      if (formattedCategory in categoryList) {
+        categoryList[formattedCategory].push(data)
+      } else {
+        categoryList[formattedCategory] = [data]
+      }
+    }
+  })
+  writeFileSync('./app/categoryList-data.json', JSON.stringify(categoryList))
 }
 
 function createSearchIndex(allBlogs) {
@@ -172,5 +194,6 @@ export default makeSource({
     createTagCount(allBlogs)
     createCategoryCount(allBlogs)
     createSearchIndex(allBlogs)
+    createCategoryList(allBlogs)
   },
 })
