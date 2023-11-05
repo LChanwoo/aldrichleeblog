@@ -1,11 +1,12 @@
 import { slug } from 'github-slugger'
-import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer'
+import { CoreContent, allCoreContent } from 'pliny/utils/contentlayer'
 import siteMetadata from '@/data/siteMetadata'
 import ListLayout from '@/layouts/ListLayoutWithCategories'
-import { allBlogs } from 'contentlayer/generated'
+import { Blog, allBlogs } from 'contentlayer/generated'
 import categoryData from 'app/category-data.json'
 import { genPageMetadata } from 'app/seo'
 import { Metadata } from 'next'
+import { sortPostsBySlug } from 'lib/utils/comparator'
 
 export async function generateMetadata({
   params,
@@ -36,7 +37,7 @@ export default function categoryPage({ params }: { params: { categories: string 
   const category = decodeURI(params.categories).split('-').join(' ')
   const title = category[0].toUpperCase() + category.split(' ').join(' ').slice(1)
   const filteredPosts = allCoreContent(
-    sortPosts(allBlogs.filter((post) => post.category == category))
-  )
+    sortPostsBySlug(allBlogs.filter((post) => post.category == category))
+  ) as CoreContent<Blog>[]
   return <ListLayout posts={filteredPosts} title={title} />
 }
