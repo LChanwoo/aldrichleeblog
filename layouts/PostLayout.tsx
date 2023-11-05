@@ -35,6 +35,7 @@ interface LayoutProps {
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
   const { filePath, path, slug, date, title, tags, category } = content
   const filteredCategory = categoryList[category!]
+  const categoryLength = filteredCategory.length
   const basePath = path.split('/')[0]
 
   return (
@@ -130,13 +131,22 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                       Category Posts
                     </h2>
                     <div className="flex flex-wrap">
-                      {filteredCategory.map((post) => (
+                      {filteredCategory.slice(0, 10).map((post) => (
                         <PostInCategory
                           key={post.slug}
                           text={post.title}
                           slug={post.slug}
                         ></PostInCategory>
                       ))}
+                    </div>
+                    <div className="right-0 flex flex-row-reverse flex-wrap">
+                      {categoryLength > 10 ? (
+                        <Link href={`/categories/${category}`} className="text-primary-500">
+                          ...더보기 {`(${categoryLength - 10} posts)`}
+                        </Link>
+                      ) : (
+                        <></>
+                      )}
                     </div>
                   </div>
                 )}
