@@ -6,7 +6,7 @@ const siteMetadata = {
   description: 'Aldrich Lee의 개발 블로그입니다.',
   language: 'ko-KR',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
+  siteUrl: 'https://aldrichleeblog.vercel.app',
   // siteRepo: 'https://github.com/timlrx/tailwind-nextjs-starter-blog',
   // siteLogo: '/static/images/logo.png',
   // socialBanner: '/static/images/twitter-card.png',
@@ -69,7 +69,7 @@ const siteMetadata = {
       // example: https://giscus.app/themes/custom_example.css
       themeURL: '',
       // This corresponds to the `data-lang="en"` in giscus's configurations
-      lang: 'en',
+      lang: 'ko',
     },
   },
   search: {
