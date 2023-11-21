@@ -131,13 +131,15 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                       Category Posts
                     </h2>
                     <div className="flex flex-wrap">
-                      {filteredCategory.slice(0, 10).map((post) => (
-                        <PostInCategory
-                          key={post.slug}
-                          text={post.title}
-                          slug={post.slug}
-                        ></PostInCategory>
-                      ))}
+                      {filteredCategory
+                        ?.slice(0, 10)
+                        .map((post) => (
+                          <PostInCategory
+                            key={post.slug}
+                            text={post.title}
+                            slug={post.slug}
+                          ></PostInCategory>
+                        ))}
                     </div>
                     <div className="right-0 flex flex-row-reverse flex-wrap">
                       {categoryLength > 10 ? (
