@@ -34,7 +34,15 @@ interface LayoutProps {
 
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
   const { filePath, path, slug, date, title, tags, category } = content
-  const filteredCategory = categoryList[category!]
+  let filteredCategory = categoryList[category!]
+  if (!filteredCategory) {
+    filteredCategory = [
+      {
+        title,
+        slug,
+      },
+    ]
+  }
   const categoryLength = filteredCategory.length
   const basePath = path.split('/')[0]
 
