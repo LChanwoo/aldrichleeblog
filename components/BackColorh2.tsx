@@ -10,7 +10,7 @@ const color_list = {
   white: 'bg-white',
   black: 'bg-black',
   mint: 'bg-green-200',
-  ozum: 'bg-yellow-200',
+  ozum: 'bg-yellow-100',
 }
 const BackColorh2 = ({ color, children }) => <h2 className={color_list[color]}>{children}</h2>
 
