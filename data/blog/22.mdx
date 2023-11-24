@@ -1,0 +1,144 @@
+---
+title: '[C++] 메모리와 포인터'
+date: '2023-11-23'
+tags: ['c++', '메모리', '포인터']
+category: 'c++'
+draft: false
+summary: '메모리와 포인터에 대해서 정리합니다.'
+---
+
+# 메모리와 주소
+
+- int i (4byte)를 선언하면 1byte로 이루어져 있는 메모리셀 공간을 예약을 하게 됨
+- int i에 값을 할당하면 예약된 메모리 셀에 데이터가 저장 됨
+- int i의 주소는 사용하는 **메모리 영역(메모리 셀 그룹)의 첫번째 주소**를 가리키게 된다.
+- &연산자로 해당 변수의 메모리 주소를 알 수 있음
+  ```cpp
+  #include<iostream>
+  using namespace std;
+
+  int i;
+  int main()
+  {
+      cout << &i << '\n';
+  }
+  ```
+  ```cpp
+  // 실행결과
+  0x104178000
+  ```
+- int i에 값을 할당해도 메모리 주소는 변경되지 않음
+  ```cpp
+  #include<iostream>
+  using namespace std;
+
+  int i;
+  int main()
+  {
+      cout << &i << '\n';
+      i = 0;
+      cout << &i << '\n';
+  }
+  ```
+  ```cpp
+  // 실행결과
+  0x104178000
+  0x104178000
+  ```
+
+# 포인터
+
+- **메모리의 주소를 담는 타입**이 포인터이다.
+- 포인터는 변수의 메모리 주소를 가리키는 타입이며 변수의 첫번째 바이트를 가리킨다.
+- 포인터는 메모리 동적할당, 데이터를 복사하지 않고 함수 매개변수로 사용, 클래스 및 구조체를 연결할 때 사용된다.
+- 예) 싱글연결리스트의 노드
+  ```cpp
+  class Node{
+  public:
+  	int data;
+  	Node* next;
+  }
+  ```
+- 포인터의 크기는 OS의 비트에 따라서 달라진다. (32bit = 4byte, 64bit = 8byte)
+  ```cpp
+  #include<iostream>
+  using namespace std;
+
+  double a = 4;
+  double b = 4.4;
+  int c = 10;
+  int main()
+  {
+      // <타입> * <변수명> = <해당 타입의 변수의 주소>
+      double *b = &a;
+      int *d = &c;
+      cout << &a << '\n';
+      cout << b << '\n';
+      cout << &c << '\n';
+      cout << d << '\n';
+      cout << sizeof(b) << '\n';
+      cout << sizeof(d) << '\n';
+  }
+  ```
+  ```cpp
+  0x1000d0000
+  0x1000d0000
+  0x1000d0010
+  0x1000d0010
+  8
+  8
+  ```
+
+# 역참조 연산자
+
+- 역참조 연산자 (\*)
+  - \*의 기능
+    - 곱셈
+    - 포인터
+    - 역참조 연산자
+  - 사용
+    ```cpp
+    #include<iostream>
+    using namespace std;
+
+    int main(){
+        string a= "abc";
+        string *b = &a;
+        cout<<b<<'\n';
+        cout<<*b<<'\n';
+    }
+    ```
+    ```cpp
+    0x16b1d71c8
+    abc
+    ```
+
+# Array to pointer deacy
+
+- 배열의 이름을 `T*` 라는 포인터에 할당하면서 `T[N]`이란 배열의 크기 정보 `N`이 없어지고 첫번째 요소의 주소가 바인딩되는 현상
+- vector는 안되고 array만 가능
+
+```cpp
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+int main(){
+    int a[3]={1,2,3};
+    int *c = a;
+    cout << c << '\n';
+    cout << &a[0] << '\n';
+    cout << c + 1 << '\n';
+    cout << &a[1] << '\n';
+    return 0;
+}
+```
+
+```cpp
+// 실행결과
+0x16afa71a8
+0x16afa71a8
+0x16afa71ac
+0x16afa71ac
+```
