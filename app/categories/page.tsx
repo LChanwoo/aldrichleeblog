@@ -23,11 +23,11 @@ export default async function Page() {
           {tagKeys.length === 0 && 'No tags found.'}
           {sortedTags.map((t) => {
             return (
-              <div key={t} className="mb-2 mr-5 mt-2">
+              <div key={t} className=" mb-2 mr-5 mt-2 w-full">
                 <CategoryTag text={t} />
                 <Link
                   href={`/categories/${slug(t)}`}
-                  className="-ml-2 text-sm font-semibold uppercase text-gray-600 dark:text-gray-300"
+                  className="-ml-2 text-sm font-semibold uppercase text-gray-600 dark:text-gray-300 "
                   aria-label={`View posts tagged ${t}`}
                 >
                   {` (${tagCounts[t]})`}
