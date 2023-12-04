@@ -1,0 +1,432 @@
+---
+title: 'HTML 기본 태그 정리'
+date: '2023-11-27'
+tags: ['HTML', 'TAG']
+category: 'HTML'
+draft: false
+summary: 'HTML 기본 태그 정리'
+---
+
+### HTML
+
+- hypertext markup language의 약자
+- 웹 페이지의 기본 뼈대
+- `<!DOCTYPE html>` - html 파일임을 명시
+- `<html></html>` - html 코드로 구성되어 있음을 명시
+- `<head></head>` 직접 볼 수 있는 공간 X, 각종 설정이나 스타일 지정, JavaScript 코드 등등 올 수 있음
+- `<body></body>` : 사용자가 육안으로 확인할 수 있는 공간
+- 태그의 특징
+
+  - `<`, `>` 기호를 이용하여 태그임을 명시
+  - 태그는 대문자로 사용 가능하지만 소문자 사용을 권장
+  - 여는 태그와 닫는 태그를 정확히 입력
+  - 태그 안에 또 다른 태그가 올 경우 tab키를 이용하여 띄어쓰기 지향
+
+  ```html
+  <!doctype html>
+  <html lang="ko-kr">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Document</title>
+    </head>
+    <body>
+      <h1>대제목</h1>
+      <h2>중제목</h2>
+      <h3>소제목</h3>
+    </body>
+  </html>
+  ```
+
+  - title: 페이지의 탭 이름 지정
+  - h1: 대제목
+  - h2: 중제목
+  - h3:소제목
+  - h4~h6 많이 사용되지 않는 제목 태그
+
+    ```html
+    <!doctype html>
+    <html lang="ko-kr">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+      </head>
+      <body>
+        <p>일반 텍스트</p>
+        <p>
+          일반 <br />
+          텍스트
+        </p>
+        <pre>
+     
+                일반,       텍스트
+                줄바꿈도 표현해줌
+            </pre
+        >
+      </body>
+    </html>
+    ```
+
+    - p : 일반텍스트 표현하는 태그
+    - br : 줄바꿈 의미하는 태그
+    - pre : 안에 있는 모든 텍스트를 있는 그대로 표현해주는 태그(줄바꿈, 띄어쓰기 전부 그대로 표현해줌)
+
+    ```html
+    <!doctype html>
+    <html lang="ko-kr">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+      </head>
+      <body>
+        <p><strong>일반</strong>텍스트</p>
+        <p><b>일반</b>텍스트</p>
+        <p><em>일반</em>텍스트</p>
+        <p><i>일반</i>텍스트</p>
+      </body>
+    </html>
+    ```
+
+    - strong : 글자 굵게(시각적으로 불편한 분들에게 읽어줄 때 표현)
+    - b : 글자 굵게( 시각적으로 불편한 분들에게 읽어줄 때 표현 X)
+    - em : 글자 기울임( 시각적으로 불편한 분들에게 읽어줄 때 표현)
+    - i : 글자 기울임( 시각적으로 불편한 분들에게 읽어줄 때 표현X)
+    - 위 태그들 모두 텍스트 내부에서 글자를 묶어주는 역할
+
+    ```html
+    <!doctype html>
+    <html lang="ko-kr">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+      </head>
+      <body>
+        <p><span>일반</span>텍스트</p>
+        <p><span style="color: red;">일반</span>텍스트</p>
+      </body>
+    </html>
+    ```
+
+    - span 태그도 마찬가지로 글자를 묶어주는 역할
+    - span 태그는 단독적으로 사용되면 아무런 역할 수행하지 않음
+    - span으로 묶인 텍스트 등에 특수한 설정을 해줄 수 있음(스타일 설정 등)
+
+    ```html
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+      </head>
+      <body>
+        <ul>
+          <li>1</li>
+          <li>2</li>
+          <li>3</li>
+          <li>4</li>
+        </ul>
+        <ol>
+          <li>5</li>
+          <li>6</li>
+          <li>7</li>
+          <li>8</li>
+        </ol>
+      </body>
+    </html>
+    ```
+
+    - ul : 순서가 없는 목록 태그
+    - ol : 순서가 있는 목록 태그
+    - li : 리스트, li 태그를 이용하여 공통적으로 목록 표현
+
+    ```html
+    <!doctype html>
+    <html lang="ko-kr">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+      </head>
+      <body>
+        <table border="5">
+          <caption>
+            표 제목임
+          </caption>
+          <tr>
+            <th>1행 1열</th>
+            <th>1행 2열</th>
+            <th>1행 3열</th>
+          </tr>
+          <tr>
+            <th>2행 1열</th>
+            <td>2행 2열</td>
+            <td>2행 3열</td>
+          </tr>
+        </table>
+      </body>
+    </html>
+    ```
+
+    - table : 표를 선언하는 태그
+    - tr: 행을 만들어주는 태그
+    - td : 열을 만들어주는 태그
+    - th : 셀을 강조하고 싶을 때 사용하는 태그
+
+    ```html
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <table border="1">
+                <caption>표 제목임</caption>
+                <tr>
+                    <td colspan="2" >위쪽</td>
+                    <td rowspan="2">right</td>
+                </tr>
+
+                <tr>
+                    <td rowspan="2">왼쪽</td>
+                    <td colspne="2"></tdcol>
+                </tr>
+
+                <tr>
+                    <td colspan="2">아랫쪽</td>
+                </tr>
+
+        </table>
+    </body>
+    </html>
+    ```
+
+    <Image alt="" src="/static/images/html/1.png" width={800} height={800} />
+
+    - rowspan : 행병합, 행을 합쳐주는 역할을 하고 열을 만들어주면서 행을 합쳐주면 다음행까지 미리합쳐주는 역할 수행
+    - colspan : 열병합
+    - 표의 큰 틀을 짜고 표의 들어갈 수 있는 부분들을 먼저 구성하여 코드 입력
+    - 합칠 부분을 생각하여 colspan을 넣어 어디 위치부터 몇 칸을 합칠 건지 생각하며 입력
+    - caption : 표 제목을 설정
+
+    ```html
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+          thead {
+            background-color: yellow;
+            color: green;
+          }
+          tbody {
+            background-color: skyblue;
+            color: greenyellow;
+          }
+          tfoot {
+            background-color: pink;
+            color: green;
+          }
+        </style>
+      </head>
+      <body>
+        <table border="1">
+          <thead>
+            <tr>
+              <th>1행 1열</th>
+              <td>1행 2열</td>
+              <td>1행 3열</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>2행 1열</th>
+              <td>2행 2열</td>
+              <td>2행 3열</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>3행 1열</th>
+              <td>3행 2열</td>
+              <td>3행 3열</td>
+            </tr>
+          </tfoot>
+        </table>
+      </body>
+    </html>
+    ```
+
+    - thead,tbody,tfoot 자체만으로는 어떠한 변화가 일어나지 않음
+    - 스타일 지정과 함께 씀으로써 특정 부분을 지정할 수 있음
+
+    ```html
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+          img {
+            border-radius: 0% 50% 50% 0%;
+          }
+        </style>
+      </head>
+      <body>
+        <img src="./고양이.jpg" alt="alt에 이런거 써 넣는거에요" />
+        <img
+          src="https://static.smalljoys.me/2020/06/2348693_img_2060_1592812208.jpg"
+          alt="alt에 이런거 써 넣는거에요"
+        />
+      </body>
+    </html>
+    ```
+
+    - img 태그는 이미지 불러올 때 사용
+    - 단일 태그
+    - 이미지를 불러오기 위해서는 src 속성과 함께 사용됨
+    - 파일의 경로 / 이미지 url 위치를 지
+
+    ```html
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+      </head>
+      <body>
+        <a href="https://www.naver.com">네이버</a>
+        <a href="https://www.google.com"><img src="고양이.jpg" /></a>
+      </body>
+    </html>
+    ```
+
+    - a 태그는 링크를 걸어주는 태그
+    - href 속성을 이용하여 이동할 위치를 지정
+    - 텍스트/ 이미지를 사용해서 링크 걸어주기 가능
+
+    ```html
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <title>Document</title>
+      </head>
+      <body>
+        <form action="https://www.google.com/search" method="GET">
+          <input type="text" name="q" />
+          <input type="submit" value="검색" />
+        </form>
+      </body>
+    </html>
+    ```
+
+    - form 태그는 백엔드의 파일이나 구조에 데이터를 넘겨주는 역할 수행
+    - method 속성을 사용하여 어떠한 방식으로 넘겨줄 것인지 지정 가능
+    - post : 비공개 방식
+    - get : 공개 방식
+    - action 속성을 지정하여 백엔드의 누가 받아줄 것인지를 지정
+
+    ```html
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <title>Document</title>
+        <style>
+          div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: chocolate;
+          }
+          form {
+            display: flex;
+            flex-direction: column;
+          }
+          input {
+            margin-bottom: 10px;
+          }
+          form input {
+            width: 200px;
+          }
+          input[type='submit'] {
+            width: 100px;
+            background-color: white;
+            border: none;
+            border-radius: 10px;
+          }
+        </style>
+      </head>
+      <body>
+        <div>
+          <form action="login.php" method="post">
+            <label for="id">
+              아이디
+              <input type="text" name="id" />
+            </label>
+
+            <label for="pw"> 비밀번호 </label>
+            <input type="password" name="pw" />
+            <input type="submit" value="로그인" />
+          </form>
+        </div>
+      </body>
+    </html>
+    ```
+
+    - label 태그를 이용하여 일반 텍스트와 입력 칸을 한줄로 묶어 줄 수 있음
+    - label 태그 안에 다 넣어주는 방식과 label 태그 따로 input 태그 따로 지정해주는 방식
+    - 전자의 경우 css 적용에 문제가 있을 수 있음
+    - 후자의 경우 css 적용에 문제가 없기 때문에 후자 많이 사용하는 편
+
+    ```html
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+      </head>
+      <body>
+        <form method="post" action="test.php">
+          <input type="text" />
+          <br />
+          <input type="password" />
+          <br />
+          <input type="search" />
+          <br />
+          <input type="tel" />
+          <br />
+          <input type="url" />
+          <br />
+          <input type="email" />
+          <br />
+          <input type="submit" />
+        </form>
+      </body>
+    </html>
+    ```
+
+    - input은 type과 같이 쓰임
+    - input에 입력된 모든 내용을 form 태그가 받아서 백엔드로 넘겨줌
+    - type
+    - text : 일반 텍스트 입력 가능(제약 사양x)
+    - password: 비밀번호 입력 가능(비밀번호 감쳐줌, 제약 사항x)
+    - search: 일반 텍스트 입력 가능(입력시 지우기 기능 제공, 제약 사항x)
+    - tel: 전화번호 입력( 국가별 전화번호 표준이 다르기 때문에 제약 사항 x)
+    - url: url 입력가능(https:// 가 앞에 등장하여 url 주소를 전부 입력해야 함)
+    - email : email 입력가능(글자 중간에 @표시가 필요)
