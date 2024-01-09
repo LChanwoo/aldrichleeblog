@@ -1,0 +1,45 @@
+---
+title: '리눅스 Log 시스템'
+date: '2023-11-20'
+tags: ['리눅스', '운영체제', 'log', 'rsyslogd', 'systemd-journald']
+category: '리눅스'
+draft: false
+summary: '리눅스 로그시스템에 대해 정리해봤습니다'
+---
+
+### Log
+
+- 로그는 커널, 서비스, 애플리케이션 등 시스템에 발생한 이벤트를 분류하여 기록한 파일
+- 로그를 가록함으로써 시스템에서 발생된 문제의 원인을 파악하거나 또는 인가되지 않은 접근으로부터 침입경로를 조회할 수 있음
+- 특히 systemd에서는 systemd-journald를 통해서 시스템에서 발생한 모든 로그를 수집하고 데이터 형식으로 관리하기 때문에 원하는 내용의 로그를 쉽고 빠르게 검색할 수 있음
+- 저장되는 위치 : /var/log
+- 관리하는 서비스 : systemd-journald, rsyslogd
+  - systemd-journald : 로그를 수집하는 역활 (/run/)
+  - rsyslogd : 로그를 저장하는 역활 (/var/)
+- 우선순위 / priority
+  - 0 : emerg
+  - 1 : alert
+  - 2 : critical
+  - 3 : error
+  - 4 : warning
+  - 5 : notice
+  - 6 : info
+  - 7 : debug
+- rsyslogd
+  - /var/log/messages : 대부분의 로그기록(단 인증,메일,반복예약,부팅 그리고 디버그 제외)
+  - /var/log/secure : 인증에 관련된 로그
+  - /var/log/maillog : 메일에 관련된 로그
+  - /var/log/cron : 반복적인 예약에 관련된 로그
+  - /var/log/boot.log : 부팅에 관련된 로그
+  - systemctl restart rsyslog.service : rsyslog.conf 설정 변경후 반영
+  - tail -f /var/log/로그파일 : 실시간 로그 모니터링
+  - logger -p 기능.우선순위 "메세지" : 로그 메세지 발생
+
+### systemd-journald
+
+- 옵션
+  - -n 숫자 : 최근 내역에서 숫자만큼 출력
+  - -p 우선순위 : 해당 우선순위 이상만 출력 / notice~warning : 볼드체 / error 이상 : 빨간색
+  - -f : 실시간으로 모니터링
+  - --since yyyy-mm-dd : 해당 날짜부터 현재까지 출력
+  - --since yyyy-mm-dd --until yyyy-mm-dd : since부터 until까지 출력

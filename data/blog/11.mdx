@@ -1,0 +1,97 @@
+---
+title: '리눅스 작업 스케줄링'
+date: '2023-11-03'
+tags: ['리눅스', '운영체제', 'cron', 'at', '작업 스케줄링']
+category: '리눅스'
+draft: false
+summary: '리눅스에서 작업 스케줄링을 하는 방법에 대해 정리합니다.'
+---
+
+### at 명령 사용
+
+- at [option] time-spec
+- 단일성 작업 예약하는 명령 → 한번 실행하면 삭제됨
+- atq : at에 걸려있는 프로세스를 확인하는 명령어
+- atrm : at에 걸려있는 프로세스를 삭제하는 명령어
+
+
+```bash
+[root@localhost spool]# systemctl status atd
+● atd.service - Job spooling tools
+   Loaded: loaded (/usr/lib/systemd/system/atd.service; enabled; vendor preset: enabled)
+   Active: inactive (dead) since Mon 2023-10-23 15:09:03 KST; 20s ago
+  Process: 1310 ExecStart=/usr/sbin/atd -f $OPTS (code=exited, status=0/SUCCESS)
+ Main PID: 1310 (code=exited, status=0/SUCCESS)
+
+Oct 23 10:06:48 localhost.localdomain systemd[1]: Started Job spooli...
+Oct 23 15:09:03 localhost.localdomain systemd[1]: Stopping Job spool...
+Oct 23 15:09:03 localhost.localdomain systemd[1]: Stopped Job spooli...
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@localhost spool]# systemctl start atd
+[root@localhost spool]# systemctl status atd
+● atd.service - Job spooling tools
+   Loaded: loaded (/usr/lib/systemd/system/atd.service; enabled; vendor preset: enabled)
+   Active: active (running) since Mon 2023-10-23 15:09:34 KST; 7s ago
+ Main PID: 7977 (atd)
+    Tasks: 1
+   CGroup: /system.slice/atd.service
+           └─7977 /usr/sbin/atd -f
+
+Oct 23 15:09:34 localhost.localdomain systemd[1]: Started Job spooli...
+Hint: Some lines were ellipsized, use -l to show in full.
+```
+## cron
+- 특정 작업을 주기적이고 반복 적으로 하기 위해 사용하는 명령어
+- 포커스
+    - 누가 작업을 실행하나
+    - 작업주기가 단발성이냐 주기적으로 반복되는거냐로 나누어짐
+        - 단발 : at
+        - 반복 : cron
+- crontab -e
+    - 크론탭 열어서 작업을 설정하는 부분
+- crontab -l
+    - 크론탭에 저장된 리스트를 확인하는 부분
+- crontab -r
+    - 현재 크론탭파일을 삭제
+- crond라는 daemon process에 의해 실행 됨
+- /var/spool/cron 폴더에 각 사용자의 이름으로 파일이 들어있음
+- crond 데몬 : 특정 주기마다 실행되는 작업을 의미, 주기적 작업을 예약할 때는 crontab 명령을 사용함
+    
+    → 관리자의 권한이 필요한 시스템 작업 등을 실행할 때 사용
+    
+- crontab
+    - crontab -e : 크론탭 사용하는 법
+    - crontab -l : 크론탭 확인하는법
+    - [ 분 ] [ 시]  [ 일 ] [ 월 ] [ 요일 ] 명령어
+    - 예) 매 45분마다 명령어 실행
+        - 45 * * * * touch clock.txt
+        - ⇒ 45분마다 clock.txt 파일 생성하고 덮어 씌움(만들어진 시간이 변경 됨)
+        - 
+            - */2  * * * *⇒ 2분 마다
+                
+                <aside>
+                😜 리다이렉션
+                
+                date > /home/test03/date.log ⇒ 새로운 걸로 덮어 씌움
+                date >> /home/test03/date.log ⇒ 파일 뒷부분에 추가함
+                
+                </aside>
+                
+    
+    <aside>
+    😜 crontab 응용문제
+    
+    새로운 유저(test03)를 생성하고 그 유저로 크론탭을 거는 것이 목표
+    date라는 명령어를 사용한 결과 값을 리다이렉션을 이용하여 date.log라는 파일로 출력
+    주기 : 2분마다
+    ⇒ /2 * * * * date >> /home/test03/date.log
+    
+    </aside>
+    
+    <aside>
+    😜 매달 10일 03시 05분 
+    ⇒ 5 3 10 * *
+    매달 10일 03시 5분 간격으로
+    ⇒ */5 3 10 * *
+    
+    </aside>

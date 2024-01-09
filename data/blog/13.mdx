@@ -1,0 +1,55 @@
+---
+title: 'nextjs로 블로그 만들기 2 - 블로그 소개페이지 작성하는 방법'
+date: '2023-11-05'
+tags: ['vercel', 'blog', 'mdx']
+category: '블로그 만들기 프로젝트'
+draft: false
+summary: '소개페이지를 작성하는 방법을 알아봅니다'
+---
+
+/data/authors/default.mdx 로 이동해줍니다
+
+이 폴더의 **[sparrowhawk.mdx](https://github.com/LChanwoo/test_blog/blob/main/data/authors/sparrowhawk.mdx)파일은 필요 없으니 지워 줍니다**
+
+```markdown
+---
+name: Tails Azimuth
+avatar: /static/images/avatar.png
+occupation: Professor of Atmospheric Science
+company: Stanford University
+email: address@yoursite.com
+twitter: https://twitter.com/Twitter
+linkedin: https://www.linkedin.com
+github: https://github.com
+---
+
+Tails Azimuth is a professor of atmospheric sciences at the Stanford AI Lab. His research interests includes complexity modelling of tailwinds, headwinds and crosswinds.
+
+He leads the clean energy group which develops 3D air pollution-climate models, writes differential equation solvers, and manufactures titanium plated air ballons. In his free time he bakes raspberry pi.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.
+```
+
+필요한 것만 남기고 전부 지워줍니다.
+
+그 후에 수정을 해주면 아래와 같은 모습이 됩니다.
+
+```markdown
+---
+name: Aldrich Lee
+avatar: /static/images/avatar.png
+github: https://github.com/LChanwoo
+---
+
+## Aldrich Lee
+
+안녕하십니까. 서버게임개발자 지망생 이찬우입니다.
+
+이 블로그는 개인적으로 공부한 내용을 정리하는 용도로 사용하고 있습니다.
+
+점점 더 발전하는 개발자가 되기 위해 노력하겠습니다.
+
+감사합니다.
+```
+
+<Image alt="" src="/static/images/mkblog/11.png" width={800} height={800} />

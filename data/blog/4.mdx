@@ -1,0 +1,157 @@
+---
+title: '라우터(Router)'
+date: '2023-11-01'
+tags: ['네트워크', '라우터', '라우팅', 'OSI7계층', '네트워크계층','Router', 'Routing']
+category: '네트워크'
+draft: false
+summary: '라우터(Router)에 대해 정리합니다'
+---
+
+## 라우터(Router)
+
+- 패킷을 수신했을 때 최적 경로를 찾아주는 기계
+- 라우터는 서로 다른 네트워크를 연결해 주는 장비
+- 라우터는 패킷을 포워딩하기 위하여 네트워크에 대한 best path를 선출한다.(lookup n, 검색, 색인)
+- 인터넷 접속에 사용되는 Layer3 장비
+- 네트워크와 네트워크 연결
+- 선출된 Best path는 Routing table에 등록되고 Packet의 Destination IP address 정보를 Routing table에서 lookup하여 forwarding 한다
+
+### Best Path 선출 기준
+
+- Longest match
+    
+    ⇒ subnet의 길이가 가장 긴 네트워크 중 보다 자세한 정보를 우선한다
+    
+    ⇒ Q1. 라우터가 패킷의 목적지 주소에 대해서 서로 다른 prefix length를 가지고 있다면 같은 네트워크 인가?
+    
+    보기1) 10.0.3.0/28
+    
+    보기2) 10.0.3.0/27
+    
+    보기3) 10.0.3.0/26
+    
+    A. prefix length가 다르기 때문에 완전히 다른 네트워크
+    
+    = 라우팅 테이블에서 확인 가능
+    
+    (next hop, outgoing interface 확인)
+    
+    ⇒ Q2. 목적지 주소로 가는 최적의 경로를 선택하는 올바른 방법은?
+    
+    A. Long subnet - Small size network - Detail network
+    
+- Administrative distnace
+    
+    ⇒ routing protocol의 우선순위이다(벤더마다 다르다)
+    
+    ⇒ 하나의 라우터에 복수의 라우팅 프로토콜이 동작해서, 동일 목적지에 대해 둘 이상의 서로 다른 경로가 제시되었을 때, 라우터가 최적의 경로를 선택하기 위해 사용하는 기능
+    
+    ⇒ 각 라우팅 프로토콜은 관리거리(AD)값의 도움을 받아 가장 낮은 값을 선택하여 우선순위를 지정
+    
+    ⇒ 관리 거리 값이 작을 수록 프로토콜의 신뢰성이 높아진다
+    
+    ⇒ 예를들어, OSPF=110 vs IGRP = 100 ⇒ IGRP가 더 안정적이라고 라우터는 판단 ⇒ 라우터는 IGRP의 경로를 라우팅 테이블에 추가
+    
+    ⇒ 기본 거리 값 테이블
+    
+    | 경로의 종류 | AD |
+    | --- | --- |
+    | 연결된 인터페이스 | 0 |
+    | 정적경로 | 1 |
+    | 외부 BGF | 20 |
+    | 내부 EIGRP | 90 |
+    | OSPF | 110 |
+    | IS-IS | 115 |
+    | RIP | 120 |
+    | 외부 EIGRP | 170 |
+    | 내부 BGP| 200 |
+    
+    ※ 정적 경로 : 고정 경로, 관리자가 라우터에 직접 설정한 경로
+    
+    ※ 동적 경로 : RIP,EIGRP, OSPF, IS-IS 등 라우터에 프로세스를 동작하여 라우터가 학습한 경로
+    
+- Routing protocol 알고리즘
+    
+    ⇒ routing protocol 마다 best-path를 선출하는 기준이다.
+    
+
+### Static Routing
+
+- 장점
+    - 초기 설치 시 관리자에게 높은 수준의 기술을 요구하지 않는다
+- 단점
+    - 관리자에게 전체 네트워크 구조에 대한 완벽한 지식이 요구된다
+    - 네트워크 장애 및 환경변화가 발생하면 대응이 느리다
+    - 대규모 네트워크의 경우 관리자의 실수에 의해 장애가 발생하기 쉽다
+    - 라우터 및 네트워크 수가 늘어남에 따라 설정 및 관리에 시간이 많이 소요된다.
+- 사용할 때
+    - 환경변화가 거의 없는 작은 네트워크일 때
+
+### Dynamic routing
+
+- Dynamic Routing Protocol
+- 장점 : 관리자의 수고가 줄어든다
+- 단점 : cpu 부담이 크다 ⇒ 라우터나 네트워크 자체에 부하가 많이 발생
+- 특징
+    - Data structure : 학습된 정보를 저장하기 위한 데이터베이스를 가지고 있다
+    - Routring Protocol Message : 네트워크 정보를 상호간에 전달하기 위하여 여러 타입의 메세지들을 가지고 있다
+    - Algorithm: Best Path를 선출하기 위한 알고리즘을 가지고 있다
+    - 대규모 네트워크 (예: IDC 센터)일 때 사용
+    <Image alt="dynamic_routing_protocols" src="/static/images/dynamic_routing_protocols.png" width={800} height={400} />
+    
+    - IGPs : 기업 또는 조직 내부에서 하는 것
+        - 네트워크 집합을 몇 개의 그룹으로 나누었을 때, 동일 그룹 내에서 라우팅 정보를 교환할 때 사용하는 라우팅 프로토콜
+        - 기업 내부에서는 IGP 프로토콜을 사용
+        - 내부→내부
+        - 가장 빠른 경로를 찾는 것이 목적
+        - Distance Vector Routing
+            - 라우팅 테이블을 업데이트하고 최적 경로를 결정하기 위해 라우터 간에 거리 벡터(즉, 라우터 간의 거리 정보)를 교환하는 방식으로 동작
+            - 일정한 주기로 라우팅 테이블을 업데이트 하며 업데이트 된 정보를 주기적으로(30초) 연결된 다른 라우터들에 전송
+            - RIP
+            
+            | RIPv1 | RIPv2 |
+            | --- | --- |
+            | classful 라우팅 프로토콜 | classless 라우팅 프로토콜 |
+            | VLSM, CIDR을 지원하지 않음 | VLSM, CIDR을 지원 |
+            | 업데이트 정보에 서브넷 마스크 포함 x | 업데이트 정보에 서브넷 마스크 포함 o |
+            |  |  |
+            |  |  |
+            - IGRP
+        - Link-State Routing
+            - 라우터 간의 거리 정보를 교환하는 대신, 링크 상태 라우팅은 네트워크 링크의 상태 정보를 교환
+                
+                ⇒ 이 정보를 사용하여 네트워크의 완전하고 정확한 지도를 작성하고, 라우터가 모든 목적지까지의 최단 경로를 계산
+                
+            - OSPF (가장 많이 씀)
+            - IS-IS
+    - EGPs : ISP 업체가 하는 것
+        - 다른 그룹과 라우팅 정보를 교환하는 프로토콜
+        - 라우팅 도메인 간에는 EGP 프로토콜을 사용
+        - 외부 → 내부
+        - 속도보다 안정적인 통신에 집중
+        - Path-Vector Routing Protocol
+            - BGP
+
+
+### IGP vs EGP
+
+- 공통점 : 둘다 모두 나의 위치를 알려준다
+- 차이점 1 : EGP는 멀리 있는 외부에서 내부로 진입할 수 있는 경로를 알려주는 것
+- 차이점 2 : IGP는 내부로 진입한 상태에서 좀 더 세부적인 설명을 통해 최적의 경로를 알려주는
+
+### Router Interface Type
+
+- Local Router Interface = LAN Interface
+- Remote router Interface = WAN Interface
+
+### classful
+
+routing 정보를 전송할 때 서브넷 정보가 포함되지 않은 것
+
+### classless
+
+routing 정보를 전송할 때 서브넷 정보가 포함된 것
+
+### CIDR(Classless Inter-Domain Routing)
+
+classless Inter-Domain Routing

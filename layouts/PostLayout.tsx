@@ -9,6 +9,9 @@ import Image from '@/components/Image'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
+import CategoryTag from '@/components/CategoryTag'
+import categoryList from '../app/categoryList-data.json'
+import PostInCategory from '@/components/PostInCategory'
 
 const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
 const discussUrl = (path) =>
@@ -30,7 +33,17 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
-  const { filePath, path, slug, date, title, tags } = content
+  const { filePath, path, slug, date, title, tags, category } = content
+  let filteredCategory = categoryList[category!]
+  if (!filteredCategory) {
+    filteredCategory = [
+      {
+        title,
+        slug,
+      },
+    ]
+  }
+  const categoryLength = filteredCategory.length
   const basePath = path.split('/')[0]
 
   return (
@@ -111,6 +124,42 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
             </div>
             <footer>
               <div className="divide-gray-200 text-sm font-medium leading-5 dark:divide-gray-700 xl:col-start-1 xl:row-start-2 xl:divide-y">
+                {category && (
+                  <div className="py-4 xl:py-8">
+                    <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                      Category
+                    </h2>
+                    <div className="flex flex-wrap">{<CategoryTag text={category} />}</div>
+                  </div>
+                )}
+                {/* 으아앙 */}
+                {category && (
+                  <div className="py-4 xl:py-8">
+                    <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                      Category Posts
+                    </h2>
+                    <div className="flex flex-wrap">
+                      {filteredCategory
+                        ?.slice(0, 10)
+                        .map((post) => (
+                          <PostInCategory
+                            key={post.slug}
+                            text={post.title}
+                            slug={post.slug}
+                          ></PostInCategory>
+                        ))}
+                    </div>
+                    <div className="right-0 flex flex-row-reverse flex-wrap">
+                      {categoryLength > 10 ? (
+                        <Link href={`/categories/${category}`} className="text-primary-500">
+                          ...더보기 {`(${categoryLength - 10} posts)`}
+                        </Link>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                  </div>
+                )}
                 {tags && (
                   <div className="py-4 xl:py-8">
                     <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">

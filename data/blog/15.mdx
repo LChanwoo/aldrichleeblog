@@ -1,0 +1,101 @@
+---
+title: 'nextjs로 블로그 만들기 1-2 - 깃 설치, VSCode 설치 블로그 클론하기'
+date: '2023-11-07'
+tags: ['git', 'blog', 'vscode', 'npm', 'nextjs']
+category: '블로그 만들기 프로젝트'
+draft: false
+summary: '블로그 개발환경을 만들어 구성합니다.'
+---
+
+# 준비물
+
+### 1. 먼저 vscode를 설치해줍니다. 자신의 운영체제 맞는 파일을 설치하시면 됩니다.
+
+[https://code.visualstudio.com/download](https://code.visualstudio.com/download)
+
+### 2. 깃을 설치합니다.
+
+[https://git-scm.com/downloads](https://git-scm.com/downloads)
+
+# 깃 클론하기
+
+### vscode를 실행해 줍니다.
+
+<Image alt="" src="/static/images/mkblog/12.png" width={800} height={800} />
+
+vscode를 실행하면 제일 먼저 보이는 화면입니다
+
+**시작** 아래에 **열기**를 눌러줍니다.
+
+프로젝트 폴더를 놓을 폴더를 정해서 열기 버튼을 클릭합니다
+
+<Image alt="" src="/static/images/mkblog/13.png" width={800} height={800} />
+
+이런 화면이 나올겁니다 ctrl + `를 클릭해서 터미널을 열어줍니다.
+
+(Mac OS에서 안되면 한/영 전환 누르시고 다시 시도하면 됩니다. )
+
+<Image alt="" src="/static/images/mkblog/14.png" width={800} height={800} />
+
+이런 화면이 나옵니다
+
+다음은 깃 클론을 할 차례입니다.
+
+<Image alt="" src="/static/images/mkblog/15.png" width={800} height={800} />
+
+초록색 Code 버튼을 누르고 https주소를 복사합니다.
+
+다시 터미널로 돌아와서 git clone을 입력하고 https주소를 붙여넣기합니다. 그리고 엔터를 입력합니다
+
+<Image alt="" src="/static/images/mkblog/16.png" width={800} height={800} />
+
+<Image alt="" src="/static/images/mkblog/17.png" width={800} height={800} />
+
+클론 과정이 끝나면 이렇게 나올 것입니다.
+
+<Image alt="" src="/static/images/mkblog/18.png" width={800} height={800} />
+
+터미널에 cd [레포지토리 이름]을 입력하고 이동합니다
+
+이제 다시 터미널에서 npm i를 입력하고 엔터를 누릅니다.
+
+<Image alt="" src="/static/images/mkblog/19.png" width={800} height={800} />
+
+npm i 는 npm(nodejs package manager) install의 줄임말로, package.json의 dependencies를 참조하여 프로젝트에 필요한 nodejs 패키지를 다운로드해 줍니다. (package.json파일이 없으면 js, jsx, ts,tsx 파일들을 읽고 눈치 껏 다운로드해서 의존성 주입을 자동으로 해줍니다.)
+
+다운로드가 시작되면 끝날 때까지 기다려줍니다
+
+<Image alt="" src="/static/images/mkblog/20.png" width={800} height={800} />
+
+다운로드가 끝나면 이렇게 나옵니다.
+
+이제 터미널에 npm run dev를 입력합니다
+
+run dev는 이 프로젝트의 명령어로
+
+package.json의 “scripts”에 설정되어 있습니다
+
+```jsx
+"scripts": {
+    "start": "next dev",
+    "dev": "cross-env INIT_CWD=$PWD next dev",
+    "build": "cross-env INIT_CWD=$PWD next build && cross-env NODE_OPTIONS='--experimental-json-modules' node ./scripts/postbuild.mjs",
+    "serve": "next start",
+    "analyze": "cross-env ANALYZE=true next build",
+    "lint": "next lint --fix --dir pages --dir app --dir components --dir lib --dir layouts --dir scripts"
+  },
+```
+
+이 프로젝트에는 위와같은 명령어들이 있는데 우리가 사용할 것은 dev와 build뿐입니다. 나머지는 잊어 줍시다.
+
+<Image alt="" src="/static/images/mkblog/21.png" width={800} height={800} />
+
+npm run dev를 실행하고 기다리면 터미널에 위와 같이 나옵니다.
+
+이제 인터넷 브라우저 주소창에 http://localhost:3000를 입력하고 접속해줍니다.
+
+<Image alt="" src="/static/images/mkblog/22.png" width={800} height={800} />
+
+이렇게 나오면 성공입니다. 이제 로컬환경에서 블로그 개발을 할 수 있는 환경이 만들어졌습니다.
+
+다음에는 eslint를 설치하여 코드 컨벤션을 맞추는 방법을 포스팅 하도록 하겠습니다.
