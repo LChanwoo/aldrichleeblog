@@ -153,7 +153,7 @@ summary: ''
 
 맵을 하나씩 순회하며, dfs로 방향에 따라 이어져 있는 부분을 분류하면 쉽게 답을 구할 수 있다.
 
-```jsx
+```cpp
 #include<iostream>
 #include<algorithm>
 using namespace std;
@@ -175,7 +175,7 @@ void dfs(int y, int x, int dir){
 }
 
 int main(){
-		//input
+	//input
     cin >> n >> m;
     for(int i=0;i<n;i++){
         for(int j=0;j<m;j++){
@@ -184,7 +184,7 @@ int main(){
             else a[i][j] = 1;
         }
     }
-		// 그래프 순회
+	// 그래프 순회
     for(int i=0;i<n;i++){
         for(int j=0;j<m;j++){
             if(!visited[i][j]){
